@@ -1,11 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Commissioner:slnt,wght,FLAR,VOLM@-12..0,100..900,0..100,0..100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Commissioner:slnt,wght,FLAR,VOLM@-12..0,100..900,0..100,0..100&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.backGround{
-    background-image: url(./assets/image-hero-desktop.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.backGround {
+	background-image: url(./assets/image-hero-desktop.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+@media (max-width: 600px) and (min-width: 0px) {
+	.backGround {
+		background-image: url(./assets/image-hero-mobile.jpg);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
 }

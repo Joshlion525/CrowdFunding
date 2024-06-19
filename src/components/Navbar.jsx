@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Logo from "../assets/logo.svg";
 import { TiThMenu } from "react-icons/ti";
-import { AiOutlineClose } from "react-icons/ai";
+import { IoClose } from "react-icons/io5";
 
 const Navbar = () => {
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -12,7 +12,7 @@ const Navbar = () => {
 
 	return (
 		<div className="relative">
-			<div className="flex items-center justify-between py-7 md:py-10 px-5 md:px-10 lg:px-52 text-white">
+			<div className="flex items-center justify-between py-7 md:py-10 px-5 md:px-10 lg:px-52 text-white ">
 				<div>
 					<a href="#">
 						<img src={Logo} alt="Logo" />
@@ -32,27 +32,27 @@ const Navbar = () => {
 					</ul>
 				</div>
 				<div className="md:hidden">
-					<TiThMenu className={`text-2xl`} onClick={toggleMenu} />
+					{menuOpen ? (
+						<IoClose className="text-xl" onClick={toggleMenu} />
+					) : (
+						<TiThMenu className="text-2xl" onClick={toggleMenu} />
+					)}
 				</div>
 			</div>
 			{menuOpen && (
-				<div className="absolute top-0 left-0 w-full h-screen  bg-opacity-90 flex flex-col items-center justify-center md:hidden">
-					<AiOutlineClose
-						className="text-3xl text-white absolute top-5 right-5"
-						onClick={toggleMenu}
-					/>
-					<ul className="flex flex-col gap-10 font-medium text-white text-2xl">
-						<li>
+				<div className="absolute top-full left-0 w-full h-screen bg-black bg-opacity-20 px-5 py-4 flex flex-col items-center md:hidden">
+					<ul className="flex flex-col font-bold text-black w-full bg-white rounded-lg">
+						<li className="border-b p-5">
 							<a href="#" onClick={toggleMenu}>
 								About
 							</a>
 						</li>
-						<li>
+						<li className="border-b p-5">
 							<a href="#" onClick={toggleMenu}>
 								Discover
 							</a>
 						</li>
-						<li>
+						<li className="p-5">
 							<a href="#" onClick={toggleMenu}>
 								Get Started
 							</a>
