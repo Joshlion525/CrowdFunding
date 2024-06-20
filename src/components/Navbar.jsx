@@ -33,7 +33,7 @@ const Navbar = () => {
 				</div>
 				<div className="md:hidden">
 					{menuOpen ? (
-						<IoClose className="text-xl" onClick={toggleMenu} />
+						<IoClose className="text-2xl" onClick={toggleMenu} />
 					) : (
 						<TiThMenu className="text-2xl" onClick={toggleMenu} />
 					)}
