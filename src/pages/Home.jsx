@@ -11,7 +11,7 @@ const Home = () => {
 			<div className="backGround h-[300px] lg:h-[400px]">
 				<Navbar />
 			</div>
-			<div className="bg-Background min-h-screen flex flex-col items-center  px-7 md:px-10 lg:px-0">
+			<div className="bg-Background min-h-screen flex flex-col items-center px-7 md:px-10 lg:px-0">
 				<div className="rounded-lg border p-5 md:p-10 text-center relative -top-20 bg-white w-full lg:w-[850px]">
 					<div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
 						<img src={Mastercraft} alt="" />
@@ -19,7 +19,7 @@ const Home = () => {
 					<h1 className="font-bold text-xl lg:text-4xl my-5">
 						Mastercraft Bamboo Monitor Riser
 					</h1>
-					<p className="text-sm font-medium lg:text-xl text-gray-400 mb-9">
+					<p className="text-sm lg:text-xl text-gray-400 mb-9">
 						A beautiful & handcrafted monitor stand to reduce neck
 						and eye strain.
 					</p>
@@ -48,19 +48,19 @@ const Home = () => {
 					<div className="flex flex-col md:flex-row gap-5 md:gap-16 text-center md:text-left">
 						<div className="border-b md:border-b-0 md:border-r pb-5 md:pb-0 md:pr-10">
 							<h1 className="font-bold text-4xl mb-2">$89,914</h1>
-							<p className="text-gray-400 md:text-lg font-medium">
+							<p className="text-gray-400 md:text-lg">
 								of $100,000 backed
 							</p>
 						</div>
 						<div className="border-b md:border-b-0 md:border-r pb-5 md:pb-0 md:pr-10">
 							<h1 className="font-bold text-4xl mb-2">5,007</h1>
-							<p className="text-gray-400 md:text-lg font-medium">
+							<p className="text-gray-400 md:text-lg">
 								total backers
 							</p>
 						</div>
 						<div>
 							<h1 className="font-bold text-4xl mb-2"> 56</h1>
-							<p className="text-gray-400 md:text-lg font-medium">
+							<p className="text-gray-400 md:text-lg">
 								days left
 							</p>
 						</div>
