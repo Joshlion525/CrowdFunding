@@ -1,13 +1,62 @@
 import React, { useState } from "react";
 import { ImCross } from "react-icons/im";
+import Completedmodal from "./Completedmodal";
+import { usePledge } from "../context/PledgeContext";
 
 const Modal = ({ showModal, setShowModal }) => {
-	const [selectedPledge, setSelectedPledge] = useState(null);
+	const [error, setError] = useState("");
+	const [completed, setCompleted] = useState(false);
+	const {
+		pledgeAmount,
+		setPledgeAmount,
+		bStand,
+		setBStand,
+		bExhibit,
+		setBExhibit,
+		selectedPledge,
+		setSelectedPledge
+	} = usePledge();
 
 	if (!showModal) return null;
 
 	const handleRadioChange = (pledgeType) => {
 		setSelectedPledge(pledgeType);
+		setPledgeAmount("");
+		setError("");
+	};
+
+	const handlePledgeChange = (e) => {
+		setPledgeAmount(e.target.value);
+		setError("");
+	};
+	const deduction = () => {
+		if (selectedPledge === "bambooStand" && pledgeAmount > 25) {
+			setBStand(bStand - 1);
+			return;
+		}
+		if (selectedPledge === "blackEditionStand" && pledgeAmount > 75) {
+			setBExhibit(bExhibit - 1);
+			return;
+		}
+	};
+	const submit = (e) => {
+		e.preventDefault();
+		deduction();
+		if (!pledgeAmount) {
+			setError("Please put an amount");
+			return;
+		}
+		if (selectedPledge === "bambooStand" && pledgeAmount < 25) {
+			setError("Minimum pledge for Bamboo Stand is $25");
+			return;
+		}
+		if (selectedPledge === "blackEditionStand" && pledgeAmount < 75) {
+			setError("Minimum pledge for Black Edition Stand is $75");
+			return;
+		} else {
+			setCompleted(true);
+			setPledgeAmount("");
+		}
 	};
 
 	return (
@@ -28,8 +77,13 @@ const Modal = ({ showModal, setShowModal }) => {
 						Monitor Riser out in the world?
 					</p>
 				</div>
-				{/* Pledge with no reward */}
-				<div className="border rounded-lg mb-5">
+				<div
+					className={`border rounded-lg mb-5 ${
+						selectedPledge === "noReward"
+							? "border-ButtonBackground border-3"
+							: "border"
+					}`}
+				>
 					<div className="py-10 px-6">
 						<div className="flex items-center gap-7 mb-5">
 							<div>
@@ -66,25 +120,49 @@ const Modal = ({ showModal, setShowModal }) => {
 									Enter your pledge
 								</p>
 							</div>
-							<div className="flex items-center gap-5">
+							{error && (
+								<div className="text-red-500 text-sm block md:hidden">
+									{error}
+								</div>
+							)}
+							<form
+								className="flex items-center gap-2 sm:gap-5"
+								onSubmit={submit}
+							>
+								{error && (
+									<div className="text-red-500 hidden md:block">
+										{error}
+									</div>
+								)}
 								<div className="border-2 rounded-3xl px-5 py-3 flex">
 									<span className="mr-2 text-gray-400">
 										$
 									</span>
 									<input
 										type="number"
+										value={pledgeAmount}
+										onChange={handlePledgeChange}
 										className="w-12 border-none outline-none"
+										min="1"
 									/>
 								</div>
-								<button className="bg-ButtonBackground text-white text-sm w-fit rounded-3xl py-3 px-8 hover:bg-ButtonHover">
+								<button
+									type="submit"
+									className="bg-ButtonBackground text-white text-sm w-fit rounded-3xl py-3 px-5 sm:px-8 hover:bg-ButtonHover"
+								>
 									Continue
 								</button>
-							</div>
+							</form>
 						</div>
 					)}
 				</div>
-				{/* Bamboo Stand */}
-				<div className="border rounded-lg mb-5">
+				<div
+					className={`border rounded-lg mb-5 ${
+						selectedPledge === "bambooStand"
+							? "border-ButtonBackground border-3"
+							: "border"
+					}`}
+				>
 					<div className="py-10 px-6">
 						<div className="flex items-center gap-7 mb-5">
 							<div>
@@ -109,7 +187,7 @@ const Modal = ({ showModal, setShowModal }) => {
 								</div>
 								<div className="hidden md:block">
 									<h1 className="font-bold text-xl">
-										101{" "}
+										{bStand}{" "}
 										<span className="text-gray-400 my-5 text-base font-medium">
 											left
 										</span>
@@ -128,7 +206,7 @@ const Modal = ({ showModal, setShowModal }) => {
 						</div>
 						<div className="block md:hidden text-left mt-5">
 							<h1 className="font-bold text-xl">
-								101{" "}
+								{bStand}{" "}
 								<span className="text-gray-400 my-5 text-base font-medium">
 									left
 								</span>
@@ -142,25 +220,49 @@ const Modal = ({ showModal, setShowModal }) => {
 									Enter your pledge
 								</p>
 							</div>
-							<div className="flex items-center gap-5">
+							{error && (
+								<div className="text-red-500 text-sm block md:hidden">
+									{error}
+								</div>
+							)}
+							<form
+								className="flex items-center gap-2 sm:gap-5"
+								onSubmit={submit}
+							>
+								{error && (
+									<div className="text-red-500 hidden md:block">
+										{error}
+									</div>
+								)}
 								<div className="border-2 rounded-3xl px-5 py-3 flex">
 									<span className="mr-2 text-gray-400">
 										$
 									</span>
 									<input
 										type="number"
+										value={pledgeAmount}
+										onChange={handlePledgeChange}
 										className="w-12 border-none outline-none"
+										min="1"
 									/>
 								</div>
-								<button className="bg-ButtonBackground text-white text-sm w-fit rounded-3xl py-3 px-8 hover:bg-ButtonHover">
+								<button
+									type="submit"
+									className="bg-ButtonBackground text-white text-sm w-fit rounded-3xl py-3 px-5 sm:px-8 hover:bg-ButtonHover"
+								>
 									Continue
 								</button>
-							</div>
+							</form>
 						</div>
 					)}
 				</div>
-				{/* Black Edition Stand */}
-				<div className="border rounded-lg mb-5">
+				<div
+					className={`border rounded-lg mb-5 ${
+						selectedPledge === "blackEditionStand"
+							? "border-ButtonBackground border-3"
+							: "border"
+					}`}
+				>
 					<div className="py-10 px-6">
 						<div className="flex items-center gap-7 mb-5">
 							<div>
@@ -187,7 +289,7 @@ const Modal = ({ showModal, setShowModal }) => {
 								</div>
 								<div className="hidden md:block">
 									<h1 className="font-bold text-xl">
-										64{" "}
+										{bExhibit}{" "}
 										<span className="text-gray-400 my-5 text-base font-medium">
 											left
 										</span>
@@ -205,7 +307,7 @@ const Modal = ({ showModal, setShowModal }) => {
 						</div>
 						<div className="block md:hidden text-left mt-5">
 							<h1 className="font-bold text-xl">
-								64{" "}
+								{bExhibit}{" "}
 								<span className="text-gray-400 my-5 text-base font-medium">
 									left
 								</span>
@@ -219,24 +321,42 @@ const Modal = ({ showModal, setShowModal }) => {
 									Enter your pledge
 								</p>
 							</div>
-							<div className="flex items-center gap-5">
+							{error && (
+								<div className="text-red-500 text-sm block md:hidden">
+									{error}
+								</div>
+							)}
+							<form
+								className="flex items-center gap-2 sm:gap-5"
+								onSubmit={submit}
+							>
+								{error && (
+									<div className="text-red-500 hidden md:block">
+										{error}
+									</div>
+								)}
 								<div className="border-2 rounded-3xl px-5 py-3 flex">
 									<span className="mr-2 text-gray-400">
 										$
 									</span>
 									<input
 										type="number"
+										value={pledgeAmount}
+										onChange={handlePledgeChange}
 										className="w-12 border-none outline-none"
+										min="1"
 									/>
 								</div>
-								<button className="bg-ButtonBackground text-white text-sm w-fit rounded-3xl py-3 px-8 hover:bg-ButtonHover">
+								<button
+									type="submit"
+									className="bg-ButtonBackground text-white text-sm w-fit rounded-3xl py-3 px-5 sm:px-8 hover:bg-ButtonHover"
+								>
 									Continue
 								</button>
-							</div>
+							</form>
 						</div>
 					)}
 				</div>
-				{/* Mahogany Special Edition */}
 				<div className="border rounded-lg mb-5">
 					<div className="py-10 px-6">
 						<div className="flex items-center gap-7 mb-5">
@@ -293,6 +413,12 @@ const Modal = ({ showModal, setShowModal }) => {
 					</div>
 				</div>
 			</div>
+			{completed && (
+				<Completedmodal
+					completed={completed}
+					setCompleted={setCompleted}
+				/>
+			)}
 		</div>
 	);
 };

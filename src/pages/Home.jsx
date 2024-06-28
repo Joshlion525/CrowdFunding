@@ -1,11 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Mastercraft from "../assets/logo-mastercraft.svg";
 import { IoIosBookmark } from "react-icons/io";
 import Modal from "../components/Modal";
+import { usePledge } from "../context/PledgeContext";
 
 const Home = () => {
 	const [showModal, setShowModal] = useState(false);
+	const [totalPledge, setTotalPledge] = useState(89914);
+	const [backers, setBackers] = useState(5007);
+	const formatNumber = (number) => {
+		return new Intl.NumberFormat().format(number);
+	};
+	const {
+		pledgeAmount,
+		setPledgeAmount,
+		bStand,
+		setBStand,
+		bExhibit,
+		setBExhibit,
+		selectedPledge,
+		setSelectedPledge,
+	} = usePledge();
+
+	const Deduct = () => {
+		if (pledgeAmount !== null && selectedPledge === "bambooStand") {
+			setBStand(bStand - 1);
+			return;
+		}
+		if (pledgeAmount !== null && selectedPledge === "blackEditionStand") {
+			setBExhibit(bExhibit - 1);
+			return;
+		}
+		if (pledgeAmount !== null) {
+			let newTotalPledge = totalPledge + pledgeAmount;
+			setTotalPledge(newTotalPledge);
+			let newBackers = backers + 1;
+			setBackers(newBackers);
+		}
+	};
+
+		useEffect(() => {
+			if (showModal) {
+				Deduct();
+			}
+		}, [showModal]);
+
 	return (
 		<div>
 			<div className="backGround h-[300px] lg:h-[400px]">
@@ -47,13 +87,17 @@ const Home = () => {
 				<div className="bg-white border w-full lg:w-[850px] rounded-lg p-5 md:p-10 relative -top-12">
 					<div className="flex flex-col md:flex-row gap-5 md:gap-16 text-center md:text-left">
 						<div className="border-b md:border-b-0 md:border-r pb-5 md:pb-0 md:pr-10">
-							<h1 className="font-bold text-4xl mb-2">$89,914</h1>
+							<h1 className="font-bold text-4xl mb-2">
+								${formatNumber(totalPledge)}
+							</h1>
 							<p className="text-gray-400 md:text-lg">
 								of $100,000 backed
 							</p>
 						</div>
 						<div className="border-b md:border-b-0 md:border-r pb-5 md:pb-0 md:pr-10">
-							<h1 className="font-bold text-4xl mb-2">5,007</h1>
+							<h1 className="font-bold text-4xl mb-2">
+								{formatNumber(backers)}
+							</h1>
 							<p className="text-gray-400 md:text-lg">
 								total backers
 							</p>
@@ -105,7 +149,7 @@ const Home = () => {
 						</p>
 						<div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between md:items-center">
 							<h1 className="font-bold text-xl">
-								101{" "}
+								{bStand}{" "}
 								<span className="text-gray-400 my-5 text-base font-medium">
 									left
 								</span>
@@ -134,7 +178,7 @@ const Home = () => {
 						</p>
 						<div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between md:items-center">
 							<h1 className="font-bold text-xl">
-								64{" "}
+								{bExhibit}{" "}
 								<span className="text-gray-400 my-5 text-base font-medium">
 									left
 								</span>
