@@ -60,7 +60,7 @@ const Modal = ({ showModal, setShowModal }) => {
 	};
 
 	return (
-		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-7 md:px-10">
+		<div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 px-7 md:px-10">
 			<div className="bg-white rounded-lg p-5 md:p-10 lg:w-[850px] h-[80%] overflow-y-auto">
 				<div className="flex justify-end">
 					<ImCross

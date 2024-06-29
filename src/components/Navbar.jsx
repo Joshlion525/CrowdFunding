@@ -40,7 +40,7 @@ const Navbar = () => {
 				</div>
 			</div>
 			{menuOpen && (
-				<div className="absolute top-full left-0 w-full min-h-screen px-5 py-4 z-50 flex flex-col items-center md:hidden">
+				<div className="absolute top-full bg-black bg-opacity-10 left-0 w-full min-h-screen px-5 py-4 z-50 flex flex-col items-center md:hidden">
 					<ul className="flex flex-col font-bold text-black w-full bg-white rounded-lg border">
 						<li className="border-b p-5">
 							<a href="#" onClick={toggleMenu}>
