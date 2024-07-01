@@ -11,6 +11,8 @@ export const PledgeProvider = ({ children }) => {
 	const [bStand, setBStand] = useState(101);
 	const [bExhibit, setBExhibit] = useState(64);
 	const [selectedPledge, setSelectedPledge] = useState(null);
+	const [showModal, setShowModal] = useState(false);
+	const [completed, setCompleted] = useState(false);
 
 	return (
 		<PledgeContext.Provider
@@ -23,6 +25,10 @@ export const PledgeProvider = ({ children }) => {
 				setBExhibit,
 				selectedPledge,
 				setSelectedPledge,
+				showModal,
+				setShowModal,
+				completed,
+				setCompleted,
 			}}
 		>
 			{children}

@@ -3,9 +3,8 @@ import { ImCross } from "react-icons/im";
 import Completedmodal from "./Completedmodal";
 import { usePledge } from "../context/PledgeContext";
 
-const Modal = ({ showModal, setShowModal }) => {
+const Modal = () => {
 	const [error, setError] = useState("");
-	const [completed, setCompleted] = useState(false);
 	const {
 		pledgeAmount,
 		setPledgeAmount,
@@ -14,7 +13,11 @@ const Modal = ({ showModal, setShowModal }) => {
 		bExhibit,
 		setBExhibit,
 		selectedPledge,
-		setSelectedPledge
+		setSelectedPledge,
+		showModal,
+		setShowModal,
+		completed,
+		setCompleted,
 	} = usePledge();
 
 	if (!showModal) return null;
@@ -30,18 +33,17 @@ const Modal = ({ showModal, setShowModal }) => {
 		setError("");
 	};
 	const deduction = () => {
-		if (selectedPledge === "bambooStand" && pledgeAmount > 25) {
+		if (selectedPledge === "bambooStand" && pledgeAmount >= 25) {
 			setBStand(bStand - 1);
 			return;
 		}
-		if (selectedPledge === "blackEditionStand" && pledgeAmount > 75) {
+		if (selectedPledge === "blackEditionStand" && pledgeAmount >= 75) {
 			setBExhibit(bExhibit - 1);
 			return;
 		}
 	};
 	const submit = (e) => {
 		e.preventDefault();
-		deduction();
 		if (!pledgeAmount) {
 			setError("Please put an amount");
 			return;
@@ -54,8 +56,9 @@ const Modal = ({ showModal, setShowModal }) => {
 			setError("Minimum pledge for Black Edition Stand is $75");
 			return;
 		} else {
+			deduction();
 			setCompleted(true);
-			setPledgeAmount("");
+			// setPledgeAmount("");
 		}
 	};
 
